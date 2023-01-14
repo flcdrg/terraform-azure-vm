@@ -55,11 +55,40 @@ resource "azurerm_network_security_rule" "rdp" {
 }
 
 
-# resource "azurerm_virtual_machine" "vm" {
-#   resource_group_name = data.azurerm_resource_group.group.name
-#   name = "vm-chocotest-australiasoutheast"
-#   boot_diagnostics {
-#     enabled = false
-#   }
+resource "azurerm_windows_virtual_machine" "vm" {
+  name                  = "vm-chocotest-australiasoutheast"
+  resource_group_name   = data.azurerm_resource_group.group.name
+  location              = data.azurerm_resource_group.group.location
+  size                  = "Standard_D4s_v3"
+  admin_username        = "david"
+  admin_password        = "password"
+  network_interface_ids = [azurerm_network_interface.nic.id]
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+  source_image_reference {
+    publisher = "microsoftwindowsdesktop"
+    sku       = "win11-21h2-pro"
+    offer     = "windows-11"
+    version   = "latest"
+  }
+  computer_name            = "vm-chocotest"
+  enable_automatic_updates = true
+  hotpatching_enabled      = false
+  license_type             = "Windows_Client"
+}
 
-# }
+resource "azurerm_virtual_machine_extension" "vm-extension" {
+  name                       = "windows-vm-extension"
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.id
+  publisher                  = "Microsoft.Compute"
+  type                       = "CustomScriptExtension"
+  type_handler_version       = "1.10"
+  auto_upgrade_minor_version = true
+  settings                   = <<SETTINGS
+    { 
+      "commandToExecute": "powershell Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+    } 
+  SETTINGS
+}
