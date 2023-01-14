@@ -33,6 +33,27 @@ resource "azurerm_public_ip" "ip" {
   allocation_method   = "Dynamic"
 }
 
+resource "azurerm_network_security_group" "nsg" {
+  name                = "nsg-chocotest-australiasoutheast"
+  resource_group_name = data.azurerm_resource_group.group.name
+  location            = data.azurerm_resource_group.group.location
+}
+
+resource "azurerm_network_security_rule" "rdp" {
+  name                        = "nsgsr-chocotest-australiasoutheast"
+  resource_group_name         = data.azurerm_resource_group.group.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+  description                 = "Allow RDP"
+  protocol                    = "Tcp"
+  priority                    = 300
+  access                      = "Allow"
+  direction                   = "Inbound"
+  source_address_prefix       = "*"
+  source_port_range           = "*"
+  destination_address_prefix  = "*"
+  destination_port_range      = 3389
+}
+
 
 # resource "azurerm_virtual_machine" "vm" {
 #   resource_group_name = data.azurerm_resource_group.group.name
