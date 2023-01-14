@@ -26,6 +26,11 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
+resource "azurerm_network_interface_security_group_association" "nsg" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
 resource "azurerm_public_ip" "ip" {
   name                = "pip-chocotest-australiasoutheast"
   resource_group_name = data.azurerm_resource_group.group.name
@@ -37,6 +42,8 @@ resource "azurerm_network_security_group" "nsg" {
   name                = "nsg-chocotest-australiasoutheast"
   resource_group_name = data.azurerm_resource_group.group.name
   location            = data.azurerm_resource_group.group.location
+  connection {
+  }
 }
 
 resource "azurerm_network_security_rule" "rdp" {
@@ -74,6 +81,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
+
   }
   source_image_reference {
     publisher = "microsoftwindowsdesktop"
