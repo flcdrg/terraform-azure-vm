@@ -54,6 +54,14 @@ resource "azurerm_network_security_rule" "rdp" {
   destination_port_range      = 3389
 }
 
+resource "random_password" "password" {
+  length      = 16
+  special     = true
+  min_lower   = 1
+  min_upper   = 1
+  min_numeric = 1
+  min_special = 1
+}
 
 resource "azurerm_windows_virtual_machine" "vm" {
   name                  = "vm-chocotest-australiasoutheast"
@@ -61,7 +69,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   location              = data.azurerm_resource_group.group.location
   size                  = "Standard_D4s_v3"
   admin_username        = "david"
-  admin_password        = "password"
+  admin_password        = random_password.password.result
   network_interface_ids = [azurerm_network_interface.nic.id]
   os_disk {
     caching              = "ReadWrite"
@@ -91,4 +99,22 @@ resource "azurerm_virtual_machine_extension" "vm-extension" {
       "commandToExecute": "powershell Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
     } 
   SETTINGS
+}
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown" {
+  location              = data.azurerm_resource_group.group.location
+  virtual_machine_id    = azurerm_windows_virtual_machine.vm.id
+  timezone              = "UTC"
+  daily_recurrence_time = "1000"
+  notification_settings {
+    enabled         = true
+    time_in_minutes = 30
+    email           = "david@gardiner.net.au"
+  }
+}
+
+output "password" {
+  description = "admin password"
+  value       = random_password.password.result
+  sensitive   = true
 }
