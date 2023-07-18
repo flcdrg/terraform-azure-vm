@@ -75,7 +75,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   resource_group_name   = data.azurerm_resource_group.group.name
   location              = data.azurerm_resource_group.group.location
   size                  = "Standard_D4s_v3"
-  admin_username        = "david"
+  admin_username        = "david1" # Can't use 'David' because who knows why!
   admin_password        = random_password.password.result
   network_interface_ids = [azurerm_network_interface.nic.id]
   os_disk {
@@ -85,7 +85,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
   source_image_reference {
     publisher = "microsoftwindowsdesktop"
-    sku       = "win11-21h2-pro"
+    sku       = "win11-22h2-pro"
     offer     = "windows-11"
     version   = "latest"
   }
@@ -104,7 +104,7 @@ resource "azurerm_virtual_machine_extension" "vm-extension" {
   auto_upgrade_minor_version = true
   settings                   = <<SETTINGS
     { 
-      "commandToExecute": "powershell Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+      "commandToExecute": "powershell Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); choco feature enable -n allowGlobalConfirmation"
     } 
   SETTINGS
 }
