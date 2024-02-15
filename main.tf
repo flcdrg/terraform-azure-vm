@@ -70,6 +70,7 @@ resource "random_password" "password" {
   min_special = 1
 }
 
+// https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine.html
 resource "azurerm_windows_virtual_machine" "vm" {
   name                  = "vm-chocotest-australiasoutheast"
   resource_group_name   = data.azurerm_resource_group.group.name
@@ -84,15 +85,15 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   }
   source_image_reference {
-    publisher = "microsoftwindowsdesktop"
-    sku       = "win11-22h2-pro"
-    offer     = "windows-11"
+    publisher = "MicrosoftWindowsServer"
+    sku       = "2022-datacenter-g2"
+    offer     = "WindowsServer"
     version   = "latest"
   }
   computer_name            = "vm-chocotest"
   enable_automatic_updates = true
   hotpatching_enabled      = false
-  license_type             = "Windows_Client"
+  license_type             = "Windows_Server"
 }
 
 resource "azurerm_virtual_machine_extension" "vm-extension" {
