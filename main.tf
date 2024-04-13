@@ -85,6 +85,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   }
   source_image_reference {
+    # publisher = "microsoftwindowsdesktop"
+    # sku       = "win11-22h2-pro"
+    # offer     = "windows-11"
     publisher = "MicrosoftWindowsServer"
     sku       = "2022-datacenter-g2"
     offer     = "WindowsServer"
@@ -93,7 +96,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   computer_name            = "vm-chocotest"
   enable_automatic_updates = true
   hotpatching_enabled      = false
-  license_type             = "Windows_Server"
+  license_type             = "Windows_Server" # Windows_Client
 }
 
 resource "azurerm_virtual_machine_extension" "vm-extension" {
