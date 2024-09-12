@@ -13,10 +13,10 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  name                          = "nic-chocotest-australiasoutheast"
-  location                      = data.azurerm_resource_group.group.location
-  resource_group_name           = data.azurerm_resource_group.group.name
-  enable_accelerated_networking = true
+  name                           = "nic-chocotest-australiasoutheast"
+  location                       = data.azurerm_resource_group.group.location
+  resource_group_name            = data.azurerm_resource_group.group.name
+  accelerated_networking_enabled = true
 
   ip_configuration {
     name                          = "internal"
