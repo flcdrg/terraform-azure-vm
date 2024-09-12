@@ -35,7 +35,8 @@ resource "azurerm_public_ip" "ip" {
   name                = "pip-chocotest-australiasoutheast"
   resource_group_name = data.azurerm_resource_group.group.name
   location            = data.azurerm_resource_group.group.location
-  allocation_method   = "Dynamic"
+
+  allocation_method = "Static"
 }
 
 resource "azurerm_network_security_group" "nsg" {
