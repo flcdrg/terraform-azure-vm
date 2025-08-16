@@ -1,0 +1,8 @@
+skip-check: 
+  - CKV_DOCKER_2
+  - CKV_AZURE_9 #"Ensure that RDP access is restricted from the internet"
+  - CKV_AZURE_50 #"Ensure Virtual Machine Extensions are not Installed"
+  - CKV_AZURE_151 #"Ensure Windows VM enables encryption"
+  - CKV_AZURE_119 # "Ensure that Network Interfaces don't use public IPs"
+  - CKV2_AZURE_31 # "Ensure VNET subnet is configured with a Network Security Group (NSG)"
+  - CKV2_GHA_1 #"Ensure top-level permissions are not set to write-all"

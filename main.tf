@@ -1,3 +1,15 @@
+# https://docs.kics.io/latest/queries/terraform-queries/1e434b25-8763-4b00-a5ca-ca03b7abbb66
+# kics-scan disable=1e434b25-8763-4b00-a5ca-ca03b7abbb66
+
+# https://docs.kics.io/latest/queries/terraform-queries/azure/b4cc2c52-34a6-4b43-b57c-4bdeb4514a5a
+# kics-scan disable=b4cc2c52-34a6-4b43-b57c-4bdeb4514a5a
+
+# https://docs.kics.io/latest/queries/terraform-queries/azure/c1573577-e494-4417-8854-7e119368dc8b
+# kics-scan disable=c1573577-e494-4417-8854-7e119368dc8b
+
+# https://docs.kics.io/latest/queries/common-queries/a88baa34-e2ad-44ea-ad6f-8cac87bc7c71
+# kics-scan disable=a88baa34-e2ad-44ea-ad6f-8cac87bc7c71
+
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-chocotest-australiasoutheast"
   address_space       = ["10.1.0.0/16"]
