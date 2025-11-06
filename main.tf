@@ -106,10 +106,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
     offer     = "WindowsServer"
     version   = "latest"
   }
-  computer_name            = "vm-chocotest"
-  enable_automatic_updates = true
-  hotpatching_enabled      = false
-  license_type             = "Windows_Server" # Windows_Client
+  computer_name             = "vm-chocotest"
+  automatic_updates_enabled = true
+  hotpatching_enabled       = false
+  license_type              = "Windows_Server" # Windows_Client
 }
 
 resource "azurerm_virtual_machine_extension" "vm-extension" {
