@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.13.5"
   cloud {
     organization = "flcdrg"
     hostname     = "app.terraform.io"
