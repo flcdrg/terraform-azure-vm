@@ -8,10 +8,13 @@ on:
   # push:
   #   branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,7 +26,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       # Runs a single command using the runners shell
       - name: Run TF WhatsUp
@@ -37,6 +42,3 @@ jobs:
           # Run and ignore any errors
           ./TFWhatsUp.Console --all || true
         continue-on-error: true
-
-
-      

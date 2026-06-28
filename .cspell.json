@@ -1,19 +1,39 @@
 {
-    "version": "0.2",
-    "language": "en",
-    "ignorePaths": [
-        "**/node_modules/**",
-        "**/vscode-extension/**",
-        "**/.git/**",
-        "**/.pnpm-lock.json",
-        ".vscode",
-        "package-lock.json",
-        "megalinter-reports",
-        ".checkov.yml",
-        ".trivyignore",
-        "*.tf"
-    ],
-    "words": [
-        "stefanzweifel"
-    ]
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/**",
+    "**/.pnpm-lock.json",
+    ".vscode",
+    "megalinter",
+    "package-lock.json",
+    "report",
+    ".gitignore",
+    ".jscpd.json",
+    ".mega-linter.yml",
+    ".cspell.json"
+  ],
+  "language": "en",
+  "noConfigSearch": true,
+  "words": [
+    "megalinter",
+    "oxsecurity",
+    "stefanzweifel",
+    "VNET",
+    "flcdrg",
+    "zizmor",
+    "artipacked",
+    "tfwhatsup",
+    "xzvf",
+    "tfstate",
+    "tfvars",
+    "australiasoutheast",
+    "choco",
+    "kics",
+    "chocotest",
+    "nsgsr",
+    "hotpatching",
+    "microsoftwindowsdesktop"
+  ],
+  "version": "0.2"
 }
